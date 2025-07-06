@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "main.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb" }
+    },
+    {
+      "src": ".ui/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": ".ui/$1",
+      "headers": { "Cache-Control": "public, max-age=0" }
+    }
+  ],
+  "env": {
+    "APP_MODULE": "main:app",
+    "PORT": "8000"
+  }
+}
