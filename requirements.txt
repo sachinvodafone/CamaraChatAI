@@ -1,22 +1,10 @@
+# Core LlamaIndex with OpenAI and server support (FastAPI, Pydantic, etc.)
+llama-index[openai,server]==0.11.16
+
+# Web framework and ASGI server
 fastapi==0.115.0
 uvicorn==0.30.6
-llama-index-core==0.11.16
-llama-index-embeddings-openai==0.2.5
-llama-index-llms-openai==0.2.9
-requests==2.32.3
-beautifulsoup4==4.12.3
-python-dotenv==1.0.1
-llama-index[server]==0.10.30
-# Optional: OpenAI for LLM usage
-openai>=1.0.0
-# Optional: If you're using LangChain with LlamaIndex
-langchain>=0.1.0
-# Optional: For embedding support
-sentence-transformers
-transformers
-# Web server dependencies (FastAPI runs on uvicorn)
-uvicorn[standard]
-# Ensure Python 3.10+ compatibility
-typing-extensions>=4.0.0
-# Optional but useful
-tqdm
+
+# Optional: Useful utilities
+tqdm>=4.66.0
+
