@@ -1,10 +1,6 @@
-# Core LlamaIndex with OpenAI and server support (FastAPI, Pydantic, etc.)
-llama-index[openai,server]==0.11.16
-
-# Web framework and ASGI server
 fastapi==0.115.0
 uvicorn==0.30.6
-
-# Optional: Useful utilities
-tqdm>=4.66.0
+llama-index-core==0.11.16
+llama-index-server==0.1.10
+llama-index-embeddings-openai==0.2.5
 
