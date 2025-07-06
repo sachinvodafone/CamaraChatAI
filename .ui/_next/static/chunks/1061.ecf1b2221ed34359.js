@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[1061],{51061:(e,n,s)=>{s.r(n),s.d(n,{Skeleton:()=>c});var t=s(53891),a=s(61971);function c(e){let{className:n,...s}=e;return(0,t.jsx)("div",{"data-slot":"skeleton",className:(0,a.cn)("bg-accent animate-pulse rounded-md",n),...s})}}}]);
