@@ -1,6 +1,6 @@
-fastapi==0.115.0
-uvicorn==0.30.6
-llama-index-core==0.11.16
-llama-index-server==0.1.10
-llama-index-embeddings-openai==0.2.5
+llama-index[openai,server]==0.11.16
+uvicorn[standard]==0.30.6
+
+# Optional: progress bar
+tqdm
 
