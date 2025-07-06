@@ -7,3 +7,16 @@ requests==2.32.3
 beautifulsoup4==4.12.3
 python-dotenv==1.0.1
 llama-index[server]==0.10.30
+# Optional: OpenAI for LLM usage
+openai>=1.0.0
+# Optional: If you're using LangChain with LlamaIndex
+langchain>=0.1.0
+# Optional: For embedding support
+sentence-transformers
+transformers
+# Web server dependencies (FastAPI runs on uvicorn)
+uvicorn[standard]
+# Ensure Python 3.10+ compatibility
+typing-extensions>=4.0.0
+# Optional but useful
+tqdm
