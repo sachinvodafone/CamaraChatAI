@@ -1,4 +1,4 @@
-llama-index-core==0.11.16
+llama-index-core==0.12.28
 llama-index-server==0.1.10
 llama-index-embeddings-openai==0.2.5
 uvicorn[standard]==0.30.6
