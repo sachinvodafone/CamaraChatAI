@@ -128,6 +128,7 @@ def query_index(query, index):
     except Exception as e:
         logger.error(f"Query failed: {e}")
         return "Error: No data available"
+        
 
 if __name__ == "__main__":
     index = generate_index()
