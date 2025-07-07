@@ -5,12 +5,13 @@ from llama_index.core.agent.workflow import AgentWorkflow
 from llama_index.core.settings import Settings
 from llama_index.server.api.models import ChatRequest
 
-# New imports for current LlamaIndex version
+# Updated import for ResponseSynthesizer
+from llama_index.core import get_response_synthesizer # <--- CHANGE IS HERE
+
 from llama_index.core.tools import QueryEngineTool, ToolMetadata
-from llama_index.core.response_synthesizers import ResponseSynthesizer
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.retrievers import VectorIndexRetriever
-from llama_index.core.prompts import PromptTemplate # For the system prompt
+from llama_index.core.prompts import PromptTemplate
 
 
 def create_workflow(chat_request: Optional[ChatRequest] = None) -> AgentWorkflow:
@@ -21,18 +22,13 @@ def create_workflow(chat_request: Optional[ChatRequest] = None) -> AgentWorkflow
         )
 
     # 1. Create the Retriever
-    # This retrieves relevant nodes from your index
     retriever = VectorIndexRetriever(index=index, similarity_top_k=5) # You can adjust top_k
 
     # 2. Configure the Response Synthesizer to handle citations
-    # The 'compact' mode often includes sources by default, or you can use
-    # other modes like 'tree_summarize' and ensure sources are returned.
-    # The actual "citation" formatting logic happens here.
-    response_synthesizer = ResponseSynthesizer.from_defaults(
+    # Use the get_response_synthesizer factory function
+    response_synthesizer = get_response_synthesizer(
         response_mode="compact", # or "tree_summarize", etc.
-        # You might need to explicitly set `text_qa_template` or `refine_template`
-        # if you want custom citation prompts within the response synthesizer.
-        # For simple source inclusion, `compact` often suffices.
+        # You can add other configurations here if needed, e.g., llm=Settings.llm
     )
 
     # 3. Create the Query Engine from the retriever and response synthesizer
@@ -42,18 +38,15 @@ def create_workflow(chat_request: Optional[ChatRequest] = None) -> AgentWorkflow
     )
 
     # 4. Wrap the Query Engine in a Tool for the AgentWorkflow
-    # ToolMetadata provides the name and description for the agent to use
     query_tool = QueryEngineTool(
         query_engine=query_engine,
         metadata=ToolMetadata(
-            name="query_knowledge_base", # Give your tool a descriptive name
+            name="query_knowledge_base",
             description="Useful for answering questions about the knowledge base.",
         ),
     )
 
     # Define the system prompt for the agent
-    # CITATION_SYSTEM_PROMPT is removed, as citation is now handled by the ResponseSynthesizer.
-    # You might want to instruct the LLM to refer to sources in your system prompt.
     system_prompt = PromptTemplate(
         """You are a helpful assistant.
         Always try to answer questions using the provided tools and information.
@@ -66,5 +59,5 @@ def create_workflow(chat_request: Optional[ChatRequest] = None) -> AgentWorkflow
     return AgentWorkflow.from_tools_or_functions(
         tools_or_functions=[query_tool],
         llm=Settings.llm,
-        system_prompt=system_prompt.format(), # Use .format() if it's a PromptTemplate
+        system_prompt=system_prompt.format(),
     )
