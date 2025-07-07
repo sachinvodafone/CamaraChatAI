@@ -4,7 +4,7 @@ from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 from llama_index.core import VectorStoreIndex, Document, Settings
 from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.llms.openai import OpenAI
+from llama_index.llms import OpenAI
 from dotenv import load_dotenv
 import logging
 import re
