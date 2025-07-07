@@ -100,15 +100,17 @@ def crawl_site(start_url):
     return documents
 
 def generate_index():
+    if os.path.exists("./storage"):
+        logger.info("Loading existing index from ./storage")
+        storage_context = StorageContext.from_defaults(persist_dir="./storage")
+        return load_index_from_storage(storage_context)
     documents = crawl_site(BASE_URL)
     if not documents:
         logger.error("No documents collected. Index will be empty.")
+        return None
     index = VectorStoreIndex.from_documents(documents)
     index.storage_context.persist(persist_dir="./storage")
     logger.info(f"✅ Index created with {len(documents)} documents.")
-    for i, doc in enumerate(documents[:3]):
-        logger.info(f"\n--- Preview: {doc.metadata['source']} ---")
-        logger.info(f"{doc.text[:500]}...")
     return index
 
 def query_index(query, index):
