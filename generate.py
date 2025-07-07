@@ -2,7 +2,7 @@ import os
 import requests
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
-from llama_index.core import VectorStoreIndex, Document, Settings
+from llama_index.core import StorageContext, load_index_from_storage
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.llms import OpenAI
 from dotenv import load_dotenv
@@ -98,6 +98,7 @@ def crawl_site(start_url):
 
     logger.info(f"Crawling complete. Collected {len(documents)} documents.")
     return documents
+
 
 def generate_index():
     if os.path.exists("./storage"):
